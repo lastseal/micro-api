@@ -91,8 +91,8 @@ class Client:
                 "criteria": criteria
             })
             
-            @self.sio.event
-            def message(data):
+            @self.sio.on('message')
+            def on_message(data):
                 handle(data)
 
         return decorator

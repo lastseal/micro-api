@@ -4,6 +4,7 @@ from micro import config
 
 import requests
 import socketio
+import logging
 import os
 
 API_URL = os.getenv("API_URL")
@@ -92,7 +93,8 @@ class Client:
             })
             
             @self.sio.on('message')
-            def on_message(data):
+            def on_message(event, sid, data):
+                logging.debug("event: %s, sid: %s", event, sid)
                 handle(data)
 
         return decorator

@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*
 
+from micro import config
+
 import requests
 import socketio
 import os

@@ -7,14 +7,14 @@ import socketio
 import os
 
 API_URL = os.getenv("API_URL")
-APi_TOKEN = os.getenv("APi_TOKEN")
+API_TOKEN = os.getenv("API_TOKEN")
 
 ##
 #
 
 class Client:
 
-    def __init__(self, url=API_URL, token=APi_TOKEN, timeout=None, websocket=False):
+    def __init__(self, url=API_URL, token=API_TOKEN, timeout=None, websocket=False):
         self.url = url
         self.timeout = timeout
         self.sio = None

@@ -76,7 +76,7 @@ class Client:
         
         return res.json()
     
-    def subscribe(self, name, criteria, event="POST"):
+    def subscribe(self, name, criteria={}, event="POST"):
         if self.sio is not None:
             self.sio.emit("subscribe", {
                 "name": name,

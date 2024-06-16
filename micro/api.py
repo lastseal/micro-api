@@ -93,8 +93,7 @@ class Client:
             })
             
             @self.sio.on('message')
-            def on_message(event, sid, data):
-                logging.debug("event: %s, sid: %s", event, sid)
+            def on_message(data):
                 handle(data)
 
         return decorator

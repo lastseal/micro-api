@@ -77,15 +77,21 @@ class Client:
         return res.json()
     
     def subscribe(self, name, criteria={}, event="POST"):
-        if self.sio is not None:
+
+        if self.sio is None:
+            return
+                
+        def decorator(handle):
+
             self.sio.emit("subscribe", {
                 "name": name,
                 "event": event,
                 "criteria": criteria
             })
-        
-        def decorator(handle):
-            handle()
+            
+            @self.sio.event
+            def message(data):
+                handle(data)
 
         return decorator
 

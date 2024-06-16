@@ -23,7 +23,7 @@ class Client:
         self.session.headers.update({"Authorization": f"Bearer {token}"})
         
         if websocket:
-            self.sio = socketio.SimpleClient()
+            self.sio = socketio.Client()
             self.sio.connect(self.url, transports=['websocket'])
 
     def get(self, uri, params=None):

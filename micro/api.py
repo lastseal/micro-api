@@ -15,18 +15,14 @@ API_TOKEN = os.getenv("API_TOKEN")
 
 class Client:
 
-    def __init__(self, url=API_URL, token=API_TOKEN, timeout=None, websocket=False):
+    def __init__(self, url=API_URL, token=API_TOKEN, timeout=None):
         self.url = url
         self.timeout = timeout
-        self.sio = None
+        self.sios = {}
 
         self.session = requests.Session()
         self.session.headers.update({"Authorization": f"Bearer {token}"})
         
-        if websocket:
-            self.sio = socketio.Client()
-            self.sio.connect(self.url, transports=['websocket'])
-
     def get(self, uri, params=None):
         
         url = f"{self.url}{uri}"
@@ -81,18 +77,20 @@ class Client:
     
     def subscribe(self, name, criteria={}, event="POST"):
 
-        if self.sio is None:
-            return
+        sio = socketio.Client()
+        sio.connect(self.url, transports=['websocket'])
+
+        self.sios[name] = sio
                 
         def decorator(handle):
 
-            self.sio.emit("subscribe", {
+            sio.emit("subscribe", {
                 "name": name,
                 "event": event,
                 "criteria": criteria
             })
             
-            @self.sio.on('message')
+            @sio.on('message')
             def on_message(data):
                 handle(data)
 

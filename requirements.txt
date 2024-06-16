@@ -1,1 +1,4 @@
 requests>=2.31.0
+python-socketio==5.11.2
+simple-websocket==1.0.0
+websocket-client==1.8.0

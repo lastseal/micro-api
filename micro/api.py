@@ -22,7 +22,22 @@ class Client:
 
         self.session = requests.Session()
         self.session.headers.update({"Authorization": f"Bearer {token}"})
-        
+
+    def retry(func):
+        def wrapper(self, *args, **kwargs):
+            retries = 0
+            while retries <= self.retries:
+                try:
+                    return func(self, *args, **kwargs)
+                except Exception as ex:
+                    retries += 1
+                    logging.warning("retry: %d, ex: %s", retries, ex)
+                    time.sleep(1)
+                    if retries > self.retries:
+                        raise ex
+        return wrapper
+
+    @retry
     def get(self, uri, params=None):
         
         url = f"{self.url}{uri}"
@@ -35,7 +50,8 @@ class Client:
             })
         
         return res.json()
-    
+
+    @retry
     def post(self, uri, data):
 
         url = f"{self.url}{uri}"
@@ -48,7 +64,8 @@ class Client:
             })
         
         return res.json()
-    
+
+    @retry
     def put(self, uri, data):
 
         url = f"{self.url}{uri}"
@@ -61,7 +78,8 @@ class Client:
             })
         
         return res.json()
-    
+
+    @retry
     def delete(self, uri, data):
 
         url = f"{self.url}{uri}"

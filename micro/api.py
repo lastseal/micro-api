@@ -42,6 +42,9 @@ class Client:
     def get(self, uri, params=None):
         
         url = f"{self.url}{uri}"
+
+        logging.debug("GET url: %s, params: %s", url, params)
+        
         res = self.session.get(url, params=params, timeout=self.timeout)
 
         if res.status_code >= 400:
@@ -56,6 +59,9 @@ class Client:
     def post(self, uri, data):
 
         url = f"{self.url}{uri}"
+
+        logging.debug("POST url: %s, json: %s", url, data)
+        
         res = self.session.post(url, json=data, timeout=self.timeout)
 
         if res.status_code >= 400:
@@ -70,6 +76,9 @@ class Client:
     def put(self, uri, data):
 
         url = f"{self.url}{uri}"
+
+        logging.debug("PUT url: %s, json: %s", url, data)
+        
         res = self.session.put(url, json=data, timeout=self.timeout)
 
         if res.status_code >= 400:
@@ -84,6 +93,9 @@ class Client:
     def delete(self, uri, data):
 
         url = f"{self.url}{uri}"
+
+        logging.debug("DELETE url: %s, json: %s", url, data)
+        
         res = self.session.delete(url, timeout=self.timeout)
 
         if res.status_code >= 400:

@@ -15,10 +15,11 @@ API_TOKEN = os.getenv("API_TOKEN")
 
 class Client:
 
-    def __init__(self, url=API_URL, token=API_TOKEN, timeout=None):
+    def __init__(self, url=API_URL, token=API_TOKEN, timeout=None, retries=3):
         self.url = url
         self.timeout = timeout
         self.sios = {}
+        self.retries = retries
 
         self.session = requests.Session()
         self.session.headers.update({"Authorization": f"Bearer {token}"})

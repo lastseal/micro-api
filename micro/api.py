@@ -108,7 +108,7 @@ class Client:
     
     def subscribe(self, name, criteria={}, event="POST"):
 
-        logging.debug("WS url: %s, criteria: %s", url, criteria)
+        logging.debug("WS url: %s, criteria: %s", self.url, criteria)
 
         sio = socketio.Client()
         sio.connect(self.url, transports=['websocket'])

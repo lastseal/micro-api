@@ -91,11 +91,11 @@ class Client:
         return res.json()
 
     @retry
-    def delete(self, uri, data):
+    def delete(self, uri):
 
         url = f"{self.url}{uri}"
 
-        logging.debug("DELETE url: %s, json: %s", url, data)
+        logging.debug("DELETE url: %s", url)
         
         res = self.session.delete(url, timeout=self.timeout)
 

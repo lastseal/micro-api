@@ -62,8 +62,11 @@ class Client:
         url = f"{self.url}{uri}"
 
         logging.debug("POST url: %s, json: %s, files: %s", url, data, files)
-        
-        res = self.session.post(url, json=data, files=files, timeout=self.timeout)
+
+        if files is None:
+            res = self.session.post(url, json=data, timeout=self.timeout)
+        else:
+            res = self.session.post(url, data=data, files=files, timeout=self.timeout)
 
         if res.status_code >= 400:
             raise Exception({

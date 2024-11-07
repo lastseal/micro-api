@@ -133,3 +133,20 @@ class Client:
 
         return decorator
 
+##
+#
+
+client = Client()
+
+def get(uri, params=None):
+    return client.get(uri, params)
+
+def post(uri, data=None, files=None):
+    return client.post(uri, data, files)
+
+def put(uri, data):
+    return client.put(uri, data)
+
+def delete(uri):
+    return client.delete(uri)
+
